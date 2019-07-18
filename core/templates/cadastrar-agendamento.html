@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+{{ form.media }}
+
+
+<div class="container-fluid ">
+	<div class="row">
+		<div class="card col-7 mx-auto background-form shadow-lg p-3 mb-5 bg-white rounded">
+			<div class="card-header"><h4><strong>Cadastrar agendamento de montagem</strong></h4></div>
+			<div class="card-body">
+				{{ form.non_field_errors }}
+				<form class="post-form form-group" action="#" method="post" >
+					{% csrf_token %}
+					<div class="row">                    
+						<div class="col-2">
+							<label class="font-weight-bold">Loja:</label>
+							{{ form.loja }}                        
+						</div>
+						<div class="col-3">
+							<label class="font-weight-bold">Minuta:</label>
+							{{ form.numMinuta }}                         
+						</div>
+						<div class="col-7">
+							<label class="font-weight-bold">Cliente:</label>
+							{{ form.cliente }}                         
+						</div>						
+						<div class="col-2">
+							<label class="font-weight-bold mt-2">Zona:</label>
+							{{ form.zona }} 
+						</div>
+						<div class="col-3">
+							<label class="font-weight-bold mt-2">Data de agendamento:</label>
+							{{ form.dataAgendamento }} 
+						</div>
+						<div class="col-3">
+							<label class="font-weight-bold mt-2">Turno de agendamento:</label>
+							{{ form.turnoAgendamento }} 
+						</div>
+						<div class="col-4"></div>
+						
+						<div class="col">
+                            <br/>
+                            <button type="submit" class="btn btn-info btn-block"><strong>Agendar montagem</strong></button>                        
+                        </div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

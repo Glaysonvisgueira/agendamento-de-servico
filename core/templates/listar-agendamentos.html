@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+{{ form.media }}
+
+<div class="container-fluid ">
+	<h1 class="col text-info text-center"><strong>Relatório de agendamentos</strong></h1>
+</div>
+<hr/>
+<div class="row mt-4 ">
+	<div class="col-4"></div>
+	<div class="col-2 ">{{form.dataInicio}}</div>
+	<div class="col-2">{{form.dataFim}}</div>
+	<button type="button" class="btn btn-warning col-1"><strong>Pesquisar&nbsp;<img src="/static/feather/search.svg" alt="edit" class="icone"></strong></button>
+</div>
+<br/>
+
+
+<!-- Abas nav -->
+<div class="container-fluid ">
+	<div class="row">
+		<div class="col-11 mx-auto">
+			<ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active " id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><strong>SUL&nbsp;<span class="badge badge-pill badge-primary ">{{qtdSul}}</span></strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="profile" aria-selected="false"><strong>DIRCEU&nbsp;<span class="badge badge-pill badge-primary ">{{qtdDirceu}}</span></strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false"><strong>LESTE&nbsp;<span class="badge badge-pill badge-primary ">{{qtdLeste}}</span></strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false"><strong>NORTE&nbsp;<span class="badge badge-pill badge-primary ">{{qtdNorte}}</span></strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><strong>TIMON&nbsp;<span class="badge badge-pill badge-primary ">{{qtdTimon}}</span></strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><strong>R.LESTE</strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><strong>R.NORTE</strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><strong>R.TIMON</strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><strong>R.DIRCEU</strong></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><strong>R.SUL</strong></a>
+				</li>
+			</ul>
+
+			<!-- Painel de abas -->
+			<div class="tab-content">
+				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<div class="row">
+						<div class="col-12 alert alert-info mt-4" role="alert">
+							Quantidade de notas agendadas: &nbsp;{{ qtdNorte}}
+						</div>
+						<div class="col-12 table-responsive mx-auto mt-2">
+							<table class="table table-sm  table-hover table-light">				
+								<thead class="thead-dark ">
+									<tr>					
+										<th scope="col ">LOJA</th>
+										<th scope="col">MINUTA</th>
+										<th scope="col">CLIENTE</th>
+										<th scope="col">ZONA</th>
+										<th scope="col">DATA AGENDAMENTO</th>
+										<th scope="col">TURNO</th>
+										<th scope="col">STATUS</th>
+										<th scope="col">AÇÃO</th>						
+									</tr>
+								</thead>
+								<tbody>            
+									<tr>
+										{% for agendamento in agendamentos_sul %} 							                   
+										<td>{{ agendamento.loja }}</td>
+										<td>{{ agendamento.numMinuta }}</td>
+										<td>{{ agendamento.cliente|upper }}</td>
+										<td>{{ agendamento.zona }}</td>
+										<td>{{ agendamento.dataAgendamento|date:"d/m/Y" }}</td>
+										<td>{{ agendamento.turnoAgendamento }}</td>
+										<td>
+											{% if agendamento.status == "REALIZADO" %}
+											<a class="badge badge-pill badge-success mx-auto">{{ agendamento.status}}</a>
+											{% elif agendamento.status == "AGENDADO" %}
+											<a class="badge badge-pill badge-danger mx-auto">{{ agendamento.status}}</a>
+											{% else %}
+											<a class="badge badge-pill badge-secondary mx-auto">{{ agendamento.status}}</a>
+											{% endif%}
+										</td>
+										<td><a href="#" class="badge badge-warning"><img src="/static/feather/edit.svg" alt="edit" class="icone"></a>&nbsp;<a href="#" class="badge badge-warning"><img src="/static/feather/trash-2.svg" alt="trash" class="icone"></a></td>											
+									</tr>
+								</tbody>{% endfor %}
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="row">
+						<div class="col-12 table-responsive mx-auto mt-2">
+							<table class="table table-sm table-bordered table-hover table-light">				
+								<thead class="thead-dark ">
+									<tr>					
+										<th scope="col">LOJA</th>
+										<th scope="col">MINUTA</th>
+										<th scope="col">CLIENTE</th>
+										<th scope="col">ZONA</th>
+										<th scope="col">DATA AGENDAMENTO</th>
+										<th scope="col">TURNO</th>						
+									</tr>
+								</thead>
+								<tbody>            
+									<tr>
+										{% for agendamento in agendamentos_dirceu %} 							                   
+										<td>{{ agendamento.loja }}</td>
+										<td>{{ agendamento.numMinuta }}</td>
+										<td>{{ agendamento.cliente|upper }}</td>
+										<td>{{ agendamento.zona }}</td>
+										<td>{{ agendamento.dataAgendamento|date:"d/m/Y" }}</td>
+										<td>{{ agendamento.turnoAgendamento }}</td>
+									</tr>
+								</tbody>{% endfor %}
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+					<div class="row">
+						<div class="col-12 table-responsive mx-auto mt-2">
+							<table class="table table-sm table-bordered table-hover table-light">				
+								<thead class="thead-dark ">
+									<tr>					
+										<th scope="col">LOJA</th>
+										<th scope="col">MINUTA</th>
+										<th scope="col">CLIENTE</th>
+										<th scope="col">ZONA</th>
+										<th scope="col">DATA AGENDAMENTO</th>
+										<th scope="col">TURNO</th>						
+									</tr>
+								</thead>
+								<tbody>            
+									<tr>
+										{% for agendamento in agendamentos_leste %} 							                   
+										<td>{{ agendamento.loja }}</td>
+										<td>{{ agendamento.numMinuta }}</td>
+										<td>{{ agendamento.cliente|upper }}</td>
+										<td>{{ agendamento.zona }}</td>
+										<td>{{ agendamento.dataAgendamento|date:"d/m/Y" }}</td>
+										<td>{{ agendamento.turnoAgendamento }}</td>
+									</tr>
+								</tbody>{% endfor %}
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane  fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+					<div class="row">
+						<div class="col-12 table-responsive mx-auto mt-2">
+							<table class="table table-sm table-bordered table-hover table-light">				
+								<thead class="thead-dark ">
+									<tr>					
+										<th scope="col">LOJA</th>
+										<th scope="col">MINUTA</th>
+										<th scope="col">CLIENTE</th>
+										<th scope="col">ZONA</th>
+										<th scope="col">DATA AGENDAMENTO</th>
+										<th scope="col">TURNO</th>
+
+									</tr>
+								</thead>
+								<tbody>            
+									<tr>
+										{% for agendamento in agendamentos_norte %} 							                   
+										<td>{{ agendamento.loja }}</td>
+										<td>{{ agendamento.numMinuta }}</td>
+										<td>{{ agendamento.cliente|upper }}</td>
+										<td>{{ agendamento.zona }}</td>
+										<td>{{ agendamento.dataAgendamento|date:"d/m/Y" }}</td>
+										<td>{{ agendamento.turnoAgendamento }}</td>
+									</tr>
+								</tbody>{% endfor %}
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+					<div class="row">
+						<div class="col-12 table-responsive mx-auto mt-2">
+							<table class="table table-sm table-bordered table-hover table-light">				
+								<thead class="thead-dark ">
+									<tr>					
+										<th scope="col">LOJA</th>
+										<th scope="col">MINUTA</th>
+										<th scope="col">CLIENTE</th>
+										<th scope="col">ZONA</th>
+										<th scope="col">DATA AGENDAMENTO</th>
+										<th scope="col">TURNO</th>
+
+									</tr>
+								</thead>
+								<tbody>            
+									<tr>
+										{% for agendamento in agendamentos_timon %} 							                   
+										<td>{{ agendamento.loja }}</td>
+										<td>{{ agendamento.numMinuta }}</td>
+										<td>{{ agendamento.cliente|upper }}</td>
+										<td>{{ agendamento.zona }}</td>
+										<td>{{ agendamento.dataAgendamento|date:"d/m/Y" }}</td>
+										<td>{{ agendamento.turnoAgendamento }}</td>
+									</tr>
+								</tbody>{% endfor %}
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
