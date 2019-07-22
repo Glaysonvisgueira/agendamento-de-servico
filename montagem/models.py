@@ -51,7 +51,7 @@ class Minuta(models.Model):
 	dataAgendamento = models.DateField('Data de agendamento:', blank = True)
 	turnoAgendamento = models.CharField('Turno de agendamento:', choices=TURNO_DISPONIVEL,max_length = 11)
 	status = models.CharField('Status de montagem:', choices=STATUS,max_length = 9,blank=True)
-	
+    
 	def __str__(self):
 		return self.loja 
 		

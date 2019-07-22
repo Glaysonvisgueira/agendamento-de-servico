@@ -18,12 +18,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from core import views
+from django.conf.urls import url
+
 
 urlpatterns = [
 	path('',views.home, name="home"),
     path('admin/', admin.site.urls),
     path('login/',views.login, name="login"),
     path('cadastrar-agendamento/',views.agendar, name="agendar"),
-    path('listar-agendamentos/',views.listarAgendamentos, name="listarAgendamentos"),
+    path('listar-agendamentos/',views.listarAgendamentos, name="listarAgendamentos"),    
     path('events/',views.PostList, name="paginator"),
+    url(r'^editar-agendamento/(?P<pk>\d+)/edit/$', views.editarAgendamento, name='editarAgendamento'),
 ]

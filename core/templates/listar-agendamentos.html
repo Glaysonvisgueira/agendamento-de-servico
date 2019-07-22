@@ -5,6 +5,13 @@
 
 {{ form.media }}
 
+
+<script type="text/javascript">  
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })  
+</script>
+
 <div class="container-fluid ">
 	<h1 class="col text-info text-center"><strong>Relatório de agendamentos</strong></h1>
 </div>
@@ -13,10 +20,9 @@
 	<div class="col-4"></div>
 	<div class="col-2 ">{{form.dataInicio}}</div>
 	<div class="col-2">{{form.dataFim}}</div>
-	<button type="button" class="btn btn-warning col-1"><strong>Pesquisar&nbsp;<img src="/static/feather/search.svg" alt="edit" class="icone"></strong></button>
+	<button type="button" class="btn btn-warning col-1" data-toggle="tooltip" data-placement="top" title="Pesquisar agendamentos entre as datas informadas"><strong>Pesquisar&nbsp;<img src="/static/feather/search.svg" alt="edit" class="icone"></strong></button>
 </div>
 <br/>
-
 
 <!-- Abas nav -->
 <div class="container-fluid ">
@@ -61,7 +67,7 @@
 					<div class="row">
 						<div class="col-12 alert alert-info mt-4" role="alert">
 							Quantidade de notas agendadas: &nbsp;{{ qtdNorte}}
-						</div>
+						</div>						
 						<div class="col-12 table-responsive mx-auto mt-2">
 							<table class="table table-sm  table-hover table-light">				
 								<thead class="thead-dark ">
@@ -94,7 +100,7 @@
 											<a class="badge badge-pill badge-secondary mx-auto">{{ agendamento.status}}</a>
 											{% endif%}
 										</td>
-										<td><a href="#" class="badge badge-warning"><img src="/static/feather/edit.svg" alt="edit" class="icone"></a>&nbsp;<a href="#" class="badge badge-warning"><img src="/static/feather/trash-2.svg" alt="trash" class="icone"></a></td>											
+										<td><a href="{% url 'editarAgendamento' pk=agendamento.pk %}" class="badge badge-warning" data-toggle="tooltip" data-placement="top" title="Editar agendamento"><img src="/static/feather/edit.svg" alt="edit" class="icone"></a>&nbsp;<a href="#" class="badge badge-warning"><img src="/static/feather/trash-2.svg" alt="trash" class="icone"></a></td>											
 									</tr>
 								</tbody>{% endfor %}
 							</table>
@@ -223,9 +229,6 @@
 		</div>
 	</div>
 </div>
-
-
-
 
 
 

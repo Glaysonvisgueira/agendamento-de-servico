@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+{{ form.media }}
+
+<div class="container-fluid ">
+	<h1 class="col text-info text-center"><strong>Editar agendamento</strong></h1>
+</div>
+<hr/>
+<br/>
+<div class="container">
+	<div class="row">
+
+		<div class="col-4 mx-auto">
+			<div class="alert alert-warning" role="alert">
+				Após a edição clique em <strong>salvar alterações.</strong>
+			</div>	
+			<form method="POST">
+				{% csrf_token %}
+				<label class="font-weight-bold mt-2">Loja:</label>
+				<div>{{form.loja}}</div>
+				<label class="font-weight-bold mt-2">Minuta:</label>
+				<div>{{form.numMinuta}}</div>
+				<label class="font-weight-bold mt-2">Cliente:</label>
+				<div>{{form.cliente}}</div>
+				<label class="font-weight-bold mt-2">Zona:</label>
+				<div>{{form.zona}}</div>
+				<label class="font-weight-bold mt-2">Data de agendamento:</label>
+				<div>{{form.dataAgendamento}}</div>
+				<label class="font-weight-bold mt-2">Turno de agendamento:</label>
+				<div>{{form.turnoAgendamento}}</div>
+				<button type="submit" class="mt-3 btn btn-info btn-block">Salvar alterações</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}

@@ -1,30 +1,108 @@
 
-{% extends "base.html" %}
-
+{% extends "editar-agendamento.html" %}
 {% load static %}
-{{ form.media }}
-
-
 {% block content %}
 
-{% for object_list in object_list %}
-    {# Each "contact" is a Contact model object. #}
-    {{ object_list }}<br />
-    ...
-{% endfor %}
+{{ form.media }}
 
-{% if post_list.has_other_pages %}
-  <nav aria-label="Page navigation container"></nav>
-  <ul class="pagination justify-content-center">
-    {% if post_list.has_previous %}
-    <li><a href="?page={{ post_list.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
-    {% endif %}
-    {% if post_list.has_next %}
-    <li><a href="?page={{ post_list.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
-  </ul>
-  </nav>
-  {% endif %}
-  {% endif %}
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+<div class="row mt-4 ">
+    <div class="col-4"></div>
+    <div class="col-2 ">{{form.dataInicio}}</div>
+    <div class="col-2">{{form.dataFim}}</div>
+    <button type="button" class="btn btn-warning col-1"><strong>Pesquisar&nbsp;<img src="/static/feather/search.svg" alt="edit" class="icone"></strong></button>
+</div>
+<br/>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <table class=" col-11 table table-sm table-light mx-auto">             
+            <thead>
+                <tr>                    
+                    <th scope="col" style="width:200px;">LOJA</th>
+                    <th scope="col" style="width:200px;">MINUTA</th>
+                    <th scope="col" style="width:200px;">CLIENTE</th>
+                    <th scope="col" style="width:200px;">ZONA</th>
+                    <th scope="col" style="width:200px;">DATA AGENDAMENTO</th>
+                    <th scope="col" style="width:200px;">TURNO</th>
+                    <th scope="col" style="width:200px;">STATUS</th>
+                    <th scope="col" style="width:200px;">AÇÃO</th>                       
+                </tr>
+            </thead>
+            <tbody>            
+                <tr>
+                    {% for contact in contacts %}                                              
+                    <td style="width:200px;">{{ contact.loja }}</td>
+                    <td style="width:200px;">{{ contact.numMinuta }}</td>
+                    <td style="width:200px;">{{ contact.cliente|upper }}</td>
+                    <td style="width:200px;">{{ contact.zona }}</td>
+                    <td style="width:200px;">{{ contact.dataAgendamento|date:"d/m/Y" }}</td>
+                    <td style="width:200px;">{{ contact.turnoAgendamento }}</td>
+                    <td style="width:200px;">
+                        {% if contact.status == "REALIZADO" %}
+                        <a class="badge badge-pill badge-success mx-auto">{{ contact.status}}</a>
+                        {% elif contact.status == "AGENDADO" %}
+                        <a class="badge badge-pill badge-danger mx-auto">{{ contact.status}}</a>
+                        {% else %}
+                        <a class="badge badge-pill badge-secondary mx-auto">{{ contact.status}}</a>
+                        {% endif%}
+                    </td>
+                    <td><a href="#" class="badge badge-warning" data-toggle="modal" data-target="#modalExemplo"><img src="/static/feather/edit.svg" alt="edit" class="icone"></a>&nbsp;<a href="#" class="badge badge-warning"><img src="/static/feather/trash-2.svg" alt="trash" class="icone"></a></td>                                           
+                </tr>
+            </tbody>{% endfor %}
+        </table>
+    </div>
+</div>
+
+
+
+<br>
+
+
+<div class="container">
+    <div class="row">
+        <div class="pagination mx-auto">
+            <span class="step-links">
+                {% if contacts.has_previous %}        
+                <a class="btn btn-warning" href="?page={{ contacts.previous_page_number }}"><strong>Anterior</strong></a>
+                {% endif %}
+                <span class="current text-dark"><strong>
+                &nbsp;&nbsp;&nbsp;{{ contacts.number }}/{{ contacts.paginator.num_pages }}&nbsp;&nbsp;&nbsp;</strong>
+            </span>
+            {% if contacts.has_next %}
+            <a class="btn btn-warning" href="?page={{ contacts.next_page_number }}"><strong>Próxima</strong></a>   
+            {% endif %}
+        </span>
+    </div>
+</div>
+</div>
+
+<!-- Modal acionado pelo botão de editar agendamento -->
+<div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-info" id="exampleModalLabel"><strong>Editar agendamento</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-info">Salvar mudanças</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Fim do modal de edição do agendamento-->
+
 
 
 {% endblock %}
