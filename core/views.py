@@ -6,7 +6,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from montagem.models import Minuta, Zona, DataAux
 from montagem.forms import MinutaForm, DataAuxForm
 
-ITENS_POR_PAGINA = 5; #Quantidade de objetos(agendamentos) a serem exibidos por página.
+'''Verificar se o campos datepicker são válidos'''
+def is_valid_queryparam(param):
+    return param != '' and param is not None 
 
 
 def home(request):
@@ -30,18 +32,31 @@ def agendar(request):
     return render(request, template_name, context)
 
 def listarAgendamentos(request):    
-    agendamentos = Minuta.objects.all()
+    agendamentos = Minuta.objects.all().order_by('dataAgendamento')
     agendamentos_norte = Minuta.objects.filter(zona='NORTE')    
     agendamentos_sul = Minuta.objects.filter(zona='SUL')
     agendamentos_dirceu = Minuta.objects.filter(zona='DIRCEU')
     agendamentos_leste = Minuta.objects.filter(zona='LESTE')
     agendamentos_timon = Minuta.objects.filter(zona='TIMON')
     qtdNorte = Minuta.objects.filter(zona='NORTE').count()
-    qtdSul = Minuta.objects.filter(zona='SUL').count()
+    contadorAgendamentos = Minuta.objects.all().count()
     qtdDirceu = Minuta.objects.filter(zona='DIRCEU').count()
     qtdTimon = Minuta.objects.filter(zona='TIMON').count()
-    qtdLeste = Minuta.objects.filter(zona='LESTE').count()
+    qtdLeste = Minuta.objects.filter(zona='LESTE').count()  
     template_name = 'listar-agendamentos.html'
+    data_inicio_query = request.GET.get('date_min')
+    data_final_query = request.GET.get('date_max')
+    zona_escolhida = request.GET.get('zona_escolhida')
+
+    if is_valid_queryparam(data_inicio_query):
+        if zona_escolhida == '' or zona_escolhida == None:
+            agendamentos = agendamentos.filter(dataAgendamento__gte=data_inicio_query)
+            contadorAgendamentos = Minuta.objects.filter(dataAgendamento__gte=data_inicio_query).count() #To fix: Só se baseia na data inicial.           
+        else:
+            agendamentos = agendamentos.filter(dataAgendamento__gte=data_inicio_query).filter(zona=zona_escolhida)
+            contadorAgendamentos = Minuta.objects.filter(dataAgendamento__gte=data_inicio_query).filter(zona=zona_escolhida).count()
+    if is_valid_queryparam(data_final_query): 
+        agendamentos = agendamentos.filter(dataAgendamento__lte=data_final_query)
     context = {
         'agendamentos': agendamentos,
         'agendamentos_norte' :agendamentos_norte,
@@ -50,13 +65,11 @@ def listarAgendamentos(request):
         'agendamentos_leste' :agendamentos_leste,
         'agendamentos_timon' :agendamentos_timon,
         'qtdNorte': qtdNorte,
-        'qtdSul': qtdSul,
+        'contadorAgendamentos':contadorAgendamentos,
         'qtdDirceu': qtdDirceu,
         'qtdTimon': qtdTimon,
         'qtdLeste': qtdLeste,
-    }
-    form = DataAuxForm()
-    context['form'] = form
+    }    
     return render(request, template_name, context)
 
 def editarAgendamento(request, pk):

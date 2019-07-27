@@ -47,17 +47,17 @@ STATUS = (
     )
 
 class MinutaForm(forms.ModelForm):
-	loja = forms.CharField(widget=forms.Select(choices=LOJAS,attrs={'class':'form-control'}))
-	numMinuta = forms.CharField(max_length=7,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Número da minuta'}))
-	cliente = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Insira o nome do cliente'}))
-	zona = forms.CharField(widget=forms.Select(choices=ZONAS,attrs={'class':'form-control'}))
-	dataAgendamento = forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'DD/MM/AAAA'}))
-	turnoAgendamento = forms.CharField(widget=forms.Select(choices=TURNO_DISPONIVEL,attrs={'class':'form-control'}))
+    loja = forms.CharField(widget=forms.Select(choices=LOJAS,attrs={'class':'form-control'}))
+    numMinuta = forms.CharField(max_length=7,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Número da minuta'}))
+    cliente = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Insira o nome do cliente'}))
+    zona = forms.CharField(widget=forms.Select(choices=ZONAS,attrs={'class':'form-control'}))
+    dataAgendamento = forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'DD/MM/AAAA'}))
+    turnoAgendamento = forms.CharField(widget=forms.Select(choices=TURNO_DISPONIVEL,attrs={'class':'form-control'}))
+    status = forms.CharField(widget=forms.Select(choices=STATUS,attrs={'class':'form-control'}))    
 
-	
-	class Meta:
-		model = Minuta
-		fields = ['loja','numMinuta','cliente','zona','dataAgendamento','turnoAgendamento']
+    class Meta:
+	    model = Minuta
+	    fields = ['loja','numMinuta','cliente','zona','dataAgendamento','turnoAgendamento','status']
 
 class DataAuxForm(forms.ModelForm):
     dataInicio = forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'Início'}))

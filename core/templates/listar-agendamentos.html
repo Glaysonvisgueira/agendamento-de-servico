@@ -7,24 +7,102 @@
 
 
 <script type="text/javascript">  
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })  
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	})  
 </script>
 
 <div class="container-fluid ">
-	<h1 class="col text-info text-center"><strong>Relatório de agendamentos</strong></h1>
+	<h1 class="col text-dark text-center"><strong>Relatório de agendamentos</strong></h1>
 </div>
 <hr/>
-<div class="row mt-4 ">
+<!--<div class="row mt-4 ">
 	<div class="col-4"></div>
-	<div class="col-2 ">{{form.dataInicio}}</div>
-	<div class="col-2">{{form.dataFim}}</div>
+	<div class="col-2" name="data_inicio">{{form.dataInicio}}</div>
+	<div class="col-2" name="data_final">{{form.dataFim}}</div>
 	<button type="button" class="btn btn-warning col-1" data-toggle="tooltip" data-placement="top" title="Pesquisar agendamentos entre as datas informadas"><strong>Pesquisar&nbsp;<img src="/static/feather/search.svg" alt="edit" class="icone"></strong></button>
-</div>
-<br/>
+</div>-->
 
-<!-- Abas nav -->
+<div class="container card border border-warning alert-warning">	
+	<form>	
+		<div class="form-row mx-auto mt-3">
+			<div class="col-4">
+				<label class="text-dark " for="publishDateMin"><strong>Data inicial</strong></label>
+				<input type="date" class="form-control" id="publishDateMin" name="date_min">
+			</div>
+			<div class="col-4">
+				<label class="text-dark" for="publishDateMax"><strong>Data final</strong></label>
+				<input type="date" class="form-control" id="publishDateMax" name="date_max">
+			</div>
+			<div class="col-4">
+				<div class="form-group">
+					<label class="text-dark" for="exampleFormControlSelect1"><strong>Filtrar por zona</strong></label>
+					<select class="form-control" id="exampleFormCo2trolSelect1" name="zona_escolhida">
+						<option value="">Selecione</option>
+						<option value="DIRCEU">Dirceu</option>
+						<option value="SUL">Sul</option>
+						<option value="LESTE">Leste</option>
+						<option value="NORTE">Norte</option>
+						<option value="TIMON">Timon</option>
+					</select>
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-warning btn-block"><strong>Pesquisar agendamentos</strong>&nbsp;<img src="/static/feather/search.svg" alt="edit" class="icone"></button>
+
+		</form>
+	</div><br>
+</div>
+
+<br/>
+<div class="container-fluid">
+	<div class="col-10 table-responsive mx-auto mt-2">
+		
+		<div class="alert alert-primary" role="alert">
+			Notas agendadas para a(s) data(s) filtrada(s): {{contadorAgendamentos}}
+		</div>
+		
+
+
+		<table class="table table-sm table-hover table-light">				
+			<thead>
+				<tr>					
+					<th scope="col ">LOJA</th>
+					<th scope="col">MINUTA</th>
+					<th scope="col">CLIENTE</th>
+					<th scope="col">ZONA</th>
+					<th scope="col">DATA AGENDAMENTO</th>
+					<th scope="col">TURNO</th>
+					<th scope="col">STATUS</th>
+					<th scope="col">AÇÃO</th>						
+				</tr>
+			</thead>
+			<tbody>            
+				<tr>
+					{% for agendamento in agendamentos %} 							                   
+					<td>{{ agendamento.loja }}</td>
+					<td>{{ agendamento.numMinuta }}</td>
+					<td>{{ agendamento.cliente|upper }}</td>
+					<td>{{ agendamento.zona }}</td>
+					<td>{{ agendamento.dataAgendamento|date:"d/m/Y" }}</td>
+					<td>{{ agendamento.turnoAgendamento }}</td>
+					<td>
+						{% if agendamento.status == "REALIZADO" %}
+						<a class="badge badge-pill badge-success mx-auto">{{ agendamento.status}}</a>
+						{% elif agendamento.status == "AGENDADO" %}
+						<a class="badge badge-pill badge-danger mx-auto">{{ agendamento.status}}</a>
+						{% else %}
+						<a class="badge badge-pill badge-secondary mx-auto">{{ agendamento.status}}</a>
+						{% endif%}
+					</td>
+					<td><a href="{% url 'editarAgendamento' pk=agendamento.pk %}" class="badge badge-warning" data-toggle="tooltip" data-placement="top" title="Editar agendamento"><img src="/static/feather/edit.svg" alt="edit" class="icone"></a>&nbsp;<a href="#" class="badge badge-warning"></a></td>									
+				</tr>
+			</tbody>{% endfor %}
+		</table>
+	</div>
+</div>
+
+<!--
 <div class="container-fluid ">
 	<div class="row">
 		<div class="col-11 mx-auto">
@@ -61,7 +139,7 @@
 				</li>
 			</ul>
 
-			<!-- Painel de abas -->
+			
 			<div class="tab-content">
 				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
 					<div class="row">
@@ -230,7 +308,7 @@
 	</div>
 </div>
 
-
+-->
 
 
 
