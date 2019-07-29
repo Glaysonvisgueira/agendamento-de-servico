@@ -1,6 +1,6 @@
 from django.db import models
 
-LOJAS = (
+LOJAS = (        
         ('TES', 'TES'),
         ('TEU', 'TEU'),
         ('TMA', 'TMA'),
@@ -40,17 +40,23 @@ STATUS = (
         ('CANCELADO', 'CANCELADO'),        
     )
 
+TIPO = (
+        ('T', 'T'),
+        ('E', 'E'),
+        ('CANCELADO', 'CANCELADO'),        
+    )
+
 class Minuta(models.Model):
 	id = models.AutoField(primary_key=True)
-	loja = models.CharField('Loja:', choices=LOJAS,max_length = 3)
-	numMinuta = models.CharField('Minuta:', max_length = 7)
-	cliente = models.CharField('Cliente:', max_length = 150, blank = True)
+	loja = models.CharField('Loja:', choices=LOJAS,max_length = 3, blank=False)
+	numMinuta = models.CharField('Minuta:', max_length = 7, blank=False)
+	cliente = models.CharField('Cliente:', max_length = 150, blank = False)
 	created_at = models.DateTimeField('Criado em',auto_now_add = True)
 	updated_at = models.DateTimeField('Atualizado em',auto_now = True)
-	zona = models.CharField('Zona:', choices=ZONAS,max_length = 8)
-	dataAgendamento = models.DateField('Data de agendamento:', blank = True)
-	turnoAgendamento = models.CharField('Turno de agendamento:', choices=TURNO_DISPONIVEL,max_length = 11)
-	status = models.CharField('Status de montagem:', choices=STATUS,max_length = 9,blank=True)
+	zona = models.CharField('Zona:', choices=ZONAS,max_length = 8, blank=False)
+	dataAgendamento = models.DateField('Data de agendamento:', blank=False)
+	turnoAgendamento = models.CharField('Turno de agendamento:', choices=TURNO_DISPONIVEL,max_length = 11, blank=False,default='DURANTE DIA')
+	status = models.CharField('Status de montagem:', choices=STATUS,max_length = 9, blank=True)
     
 	def __str__(self):
 		return self.loja 

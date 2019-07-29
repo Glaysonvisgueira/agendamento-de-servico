@@ -4,7 +4,7 @@ from montagem.models import Minuta, Zona, DataAux
 
 
 LOJAS = (
-		('----','----'),
+		('----','----'),        
         ('TES', 'TES'),
         ('TEU', 'TEU'),
         ('TMA', 'TMA'),
@@ -41,23 +41,32 @@ TURNO_DISPONIVEL = (
     )
 
 STATUS = (
+        ('----','----'),
         ('REALIZADO', 'REALIZADO'),
         ('AGENDADO', 'AGENDADO'),
         ('CANCELADO', 'CANCELADO'),        
     )
 
 class MinutaForm(forms.ModelForm):
-    loja = forms.CharField(widget=forms.Select(choices=LOJAS,attrs={'class':'form-control'}))
-    numMinuta = forms.CharField(max_length=7,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Número da minuta'}))
-    cliente = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Insira o nome do cliente'}))
-    zona = forms.CharField(widget=forms.Select(choices=ZONAS,attrs={'class':'form-control'}))
-    dataAgendamento = forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'DD/MM/AAAA'}))
-    turnoAgendamento = forms.CharField(widget=forms.Select(choices=TURNO_DISPONIVEL,attrs={'class':'form-control'}))
-    status = forms.CharField(widget=forms.Select(choices=STATUS,attrs={'class':'form-control'}))    
+    loja = forms.CharField(widget=forms.Select(choices=LOJAS,attrs={'class':'form-control form-control-sm'}))
+    numMinuta = forms.CharField(max_length=7,widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
+    cliente = forms.CharField(max_length=150,widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
+    zona = forms.CharField(widget=forms.Select(choices=ZONAS,attrs={'class':'form-control form-control-sm'}))
+    dataAgendamento = forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'dd/mm/aaaa','class':'form-control form-control-sm'}))
+    turnoAgendamento = forms.CharField(widget=forms.Select(choices=TURNO_DISPONIVEL,attrs={'class':'form-control form-control-sm'}))
+      
 
     class Meta:
 	    model = Minuta
-	    fields = ['loja','numMinuta','cliente','zona','dataAgendamento','turnoAgendamento','status']
+	    fields = ['loja','numMinuta','cliente','zona','dataAgendamento','turnoAgendamento']
+
+
+class StatusForm(forms.ModelForm):
+    status = forms.CharField(widget=forms.Select(choices=STATUS,attrs={'class':'form-control'}))
+    class Meta:
+        model = Minuta
+        fields = ['status']
+
 
 class DataAuxForm(forms.ModelForm):
     dataInicio = forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'Início'}))

@@ -23,6 +23,7 @@ from django.conf.urls import url
 
 urlpatterns = [
 	path('',views.home, name="home"),
+    path('crp/', include('crp.urls')),
     path('admin/', admin.site.urls),
     path('login/',views.login, name="login"),
     path('cadastrar-agendamento/',views.agendar, name="agendar"),

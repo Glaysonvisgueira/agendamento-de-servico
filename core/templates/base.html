@@ -10,7 +10,7 @@
 
  .background-site
  {
-  background: #f1f2f6;
+  background: #E0E0E0;
   background-repeat: repeat;
   background-size:100%;
 }
@@ -48,8 +48,8 @@
           Gestão de CRP's
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Cadastrar CRP</a>
-          <a class="dropdown-item" href="#">Relatório de CRP's</a>          
+          <a class="dropdown-item" href="{% url 'cadastrar_crp' %}">Cadastrar CRP</a>
+          <a class="dropdown-item" href="{% url 'relatorio_de_crps' %}">Relatório de CRP's</a>          
         </div>
       </li>
        <li class="nav-item dropdown">
@@ -71,7 +71,7 @@
 
   <div class="dropdown">
     <a class="btn btn-sm dropdown-toggle font-weight-bold text-light" style="background-color: #000000;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      &nbsp;&nbsp;&nbsp;<img src="/static/feather/user-check.svg" style="background-color: #000000;" alt="user-check" class="icone">&nbsp;&nbsp;&nbsp;Usuário:&nbsp;{{user|capfirst}}&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;<img src="/static/feather/user-check.svg" style="background-color: #000000;" alt="user-check" class="icone">&nbsp;&nbsp;&nbsp;Usuário logado:&nbsp;{{user|capfirst}}&nbsp;&nbsp;&nbsp;
     </a>
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

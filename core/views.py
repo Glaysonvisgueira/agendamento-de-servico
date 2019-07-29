@@ -4,7 +4,7 @@ from bootstrap_datepicker_plus import DateTimePickerInput
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from montagem.models import Minuta, Zona, DataAux
-from montagem.forms import MinutaForm, DataAuxForm
+from montagem.forms import MinutaForm, DataAuxForm, StatusForm
 
 '''Verificar se o campos datepicker são válidos'''
 def is_valid_queryparam(param):
@@ -28,7 +28,7 @@ def agendar(request):
             return redirect('/cadastrar-agendamento')
     else:
         form = MinutaForm()
-    context['form'] = form
+    context['form'] = form    
     return render(request, template_name, context)
 
 def listarAgendamentos(request):    
@@ -76,13 +76,16 @@ def editarAgendamento(request, pk):
     agendamento = get_object_or_404(Minuta, pk=pk)
     if request.method == "POST":
         form = MinutaForm(request.POST, instance=agendamento)
+        form1 = StatusForm(request.POST, instance=agendamento)        
         if form.is_valid():
             agendamento = form.save(commit=False)
+            agendamento = form1.save(commit=False)
             agendamento.save()
             return redirect('/listar-agendamentos', pk=agendamento.pk)
     else:
         form = MinutaForm(instance=agendamento)
-    return render(request, 'editar-agendamento.html', {'form': form})
+        form1 = StatusForm(instance=agendamento)
+    return render(request, 'editar-agendamento.html', {'form': form, 'form1':form1})
 
 def PostList(request):    
     contact_list = Minuta.objects.all()
