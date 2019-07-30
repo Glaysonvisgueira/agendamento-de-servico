@@ -8,5 +8,6 @@ from crp import views
 
 urlpatterns = [    
     path('cadastrar-crp/',views.cadastrar_crp, name="cadastrar_crp"),
-    path('relatorio-de-crps/',views.relatorio_de_crps, name="relatorio_de_crps"),
+    path('relatorio-de-crps-pendentes/',views.relatorio_de_crps_pendentes, name="relatorio_de_crps_pendentes"),
+
 ]

@@ -12,10 +12,14 @@
 	})  
 </script>
 
-<div class="container-fluid ">
+<div class="container">
 	<h1 class="col text-dark text-center"><strong>Relatório de agendamentos</strong></h1>
 </div>
-<hr/>
+<hr style="
+      background-color: #6E6E6E;
+      height: 1px;">
+
+
 <!--<div class="row mt-4 ">
 	<div class="col-4"></div>
 	<div class="col-2" name="data_inicio">{{form.dataInicio}}</div>
@@ -23,10 +27,10 @@
 	<button type="button" class="btn btn-warning col-1" data-toggle="tooltip" data-placement="top" title="Pesquisar agendamentos entre as datas informadas"><strong>Pesquisar&nbsp;<img src="/static/feather/search.svg" alt="edit" class="icone"></strong></button>
 </div>-->
 
-<div class="container card border border-warning alert-warning">	
+<div class="container card">	
 	<form>	
 		<div class="form-row mx-auto mt-3">
-			<div class="col-4">
+			<div class="col-4 ">
 				<label class="text-dark " for="publishDateMin"><strong>Data inicial</strong></label>
 				<input type="date" class="form-control" id="publishDateMin" name="date_min">
 			</div>
@@ -54,16 +58,15 @@
 	</div><br>
 </div>
 
-<br/>
-<div class="container-fluid">
-	<div class="col-10 table-responsive mx-auto mt-2">
+
+<div class="container-fluid mt-4">
+	<div class="col-10 table-responsive mx-auto card">
+		<div class="card-body">
+			<h5 class="card-header">Listagem de ordens de montagens agendadas</h5>
 		
-		<div class="alert alert-primary" role="alert">
+		<div class="alert alert-dark mt-2" role="alert">
 			Notas agendadas para a(s) data(s) filtrada(s): {{contadorAgendamentos}}
 		</div>
-		
-
-
 		<table class="table table-sm table-hover table-light">				
 			<thead>
 				<tr>					

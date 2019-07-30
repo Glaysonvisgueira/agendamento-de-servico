@@ -7,5 +7,72 @@
 
 
 
+<div class="container-fluid card">	
+	
+	<div class="card-body col-10 mx-auto">
+		<span class="badge badge-warning">Data atual: {{data_atual|date:"d/m/Y"}}</span>
+		<h5 class="card-header ">Listagem de CRP's pendentes de resolução</h5>
+		
+		<div class="card mt-3">		
+			
+			<table class="table table-hover table-sm table-light">				
+				<thead>
+					<tr>					
+						<th scope="col ">LOJA</th>
+						<th scope="col">CRP</th>
+						<th scope="col">MINUTA</th>
+						<th scope="col">ZONA</th>
+						<th scope="col">TIPO</th>
+						<th scope="col">DATA PREVISAO</th>
+						<th scope="col">RECOLHIMENTO</th>
+						<th scope="col">STATUS</th>						
+					</tr>
+				</thead>
+				<tbody>  
+					{% for crp in crps %}
+						{% if crp.dataPrevisaoLimite < data_atual %} 	          
+					<tr class="table-danger">												                   
+						<td>{{ crp.loja }}</td>
+						<td>{{ crp.numCrp }}</td>
+						<td>{{ crp.numMinuta }}</td>
+						<td>{{ crp.tipo }}</td>
+						<td>{{ crp.zona }}</td>
+						<td>{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
+						{% if crp.recolhimento == "1" %}
+						<td>SIM</td>
+						{% else %}
+						<td>NÃO</td>
+						{% endif %}						
+						<td><a class="badge badge-pill badge-danger">{{ crp.status }}</a></td>
+						{% elif crp.dataPrevisaoLimite > data_atual %}
+					<tr class="table-success">	
+						<td>{{ crp.loja }}</td>
+						<td>{{ crp.numCrp }}</td>
+						<td>{{ crp.numMinuta }}</td>
+						<td>{{ crp.tipo }}</td>
+						<td>{{ crp.zona }}</td>
+						<td>{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
+						{% if crp.recolhimento == "1" %}
+						<td>SIM</td>
+						{% else %}
+						<td>NÃO</td>
+						{% endif %}					
+						<td><a class="badge badge-pill badge-danger">{{ crp.status }}</a></td>
+
+						{% endif%}
+					</tr>
+				</tbody>{% endfor %}
+			</table>
+
+
+
+		</div>	
+	</div>
+</div>
+
+
+
+
+
 
 {% endblock %}

@@ -26,6 +26,7 @@ ZONAS = (
 
 STATUS = (
         ('REALIZADO', 'REALIZADO'),
+        ('PENDENTE', 'PENDENTE'),
         ('CANCELADO', 'CANCELADO'),        
     )
 
@@ -46,9 +47,10 @@ LOJAS = (
     )
 
 class Crp(models.Model):
+    slug = models.SlugField('Loja + Minuta:')
     loja = models.CharField('Loja:', choices=LOJAS,max_length = 3, blank=False)
     numMinuta = models.CharField('Minuta:', max_length = 7, blank=False)
-    numCrp = models.CharField('Minuta:', max_length = 5, blank=False)
+    numCrp = models.CharField('CRP:', max_length = 5, blank=False)
     tipo = models.CharField('Tipo:',choices=TIPO_CRP, max_length = 1, blank=False)
     created_at = models.DateTimeField('Criado em',auto_now_add = True)
     updated_at = models.DateTimeField('Atualizado em',auto_now = True)
@@ -56,7 +58,7 @@ class Crp(models.Model):
     dataPrevisaoLimite = models.DateField('Data limite para resolução:', blank = False)
     recolhimento = models.CharField('Recolher peça:', choices=RECOLHER_PECA,max_length = 1, blank=False)
     recolhida = models.CharField('Peça recolhida:', choices=RECOLHER_PECA,max_length = 1, blank=True)
-    status = models.CharField('Status de montagem:', choices=STATUS,max_length = 9,blank=True)
+    status = models.CharField('Status de montagem:', choices=STATUS,max_length = 9,blank=True,default='PENDENTE')
 
     def __str__(self):
         return self.loja 
