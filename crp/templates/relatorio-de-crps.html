@@ -5,74 +5,154 @@
 
 {{ form.media }}
 
+<script type="text/javascript">  
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	})  
+</script>
 
+<div class="container-fluid">
+	<div class="card col-10 mx-auto">	
 
-<div class="container-fluid card">	
-	
-	<div class="card-body col-10 mx-auto">
-		<span class="badge badge-warning">Data atual: {{data_atual|date:"d/m/Y"}}</span>
-		<h5 class="card-header ">Listagem de CRP's pendentes de resolução</h5>
-		
-		<div class="card mt-3">		
+		<div class="card-body col-12 mx-auto">
+		<!--<span class="badge badge-warning">Data atual: {{data_atual|date:"d/m/Y"}}</span>
+			<span class="badge badge-warning">Data atual: {{data_alerta|date:"d/m/Y"}}</span>-->
+			<h3 class="card-header text-center">Relatório de CRP's pendentes</h3>
 			
-			<table class="table table-hover table-sm table-light">				
-				<thead>
-					<tr>					
-						<th scope="col ">LOJA</th>
-						<th scope="col">CRP</th>
-						<th scope="col">MINUTA</th>
-						<th scope="col">ZONA</th>
-						<th scope="col">TIPO</th>
-						<th scope="col">DATA PREVISAO</th>
-						<th scope="col">RECOLHIMENTO</th>
-						<th scope="col">STATUS</th>						
-					</tr>
-				</thead>
-				<tbody>  
-					{% for crp in crps %}
-						{% if crp.dataPrevisaoLimite < data_atual %} 	          
-					<tr class="table-danger">												                   
-						<td>{{ crp.loja }}</td>
-						<td>{{ crp.numCrp }}</td>
-						<td>{{ crp.numMinuta }}</td>
-						<td>{{ crp.tipo }}</td>
-						<td>{{ crp.zona }}</td>
-						<td>{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
-						{% if crp.recolhimento == "1" %}
-						<td>SIM</td>
-						{% else %}
-						<td>NÃO</td>
-						{% endif %}						
-						<td><a class="badge badge-pill badge-danger">{{ crp.status }}</a></td>
-						{% elif crp.dataPrevisaoLimite > data_atual %}
-					<tr class="table-success">	
-						<td>{{ crp.loja }}</td>
-						<td>{{ crp.numCrp }}</td>
-						<td>{{ crp.numMinuta }}</td>
-						<td>{{ crp.tipo }}</td>
-						<td>{{ crp.zona }}</td>
-						<td>{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
-						{% if crp.recolhimento == "1" %}
-						<td>SIM</td>
-						{% else %}
-						<td>NÃO</td>
-						{% endif %}					
-						<td><a class="badge badge-pill badge-danger">{{ crp.status }}</a></td>
+				<!--<div class="card col-2 mt-2 border border-dark ">
+					<a class="card-header mx-auto"><strong>Prazos de atendimento</strong></a>
+					<p>
+						<a class="badge badge-pill badge-danger mt-2">E</a> - Estrutural: 03 dias úteis<br> 
+						<a class="badge badge-pill badge-warning">T</a> - Estético &nbsp;&nbsp;: 05 dias úteis<br>
+						<a class="badge badge-pill badge-success">R</a> - Revisão &nbsp;&nbsp;: 30 dias úteis</p>
+					</div>		-->		
 
-						{% endif%}
-					</tr>
-				</tbody>{% endfor %}
-			</table>
+					<table class="table table-sm table-light mt-4">				
+						<thead>
+							<tr>					
+								<th class="table-danger text-center">&nbsp; &nbsp;Atraso&nbsp; &nbsp;</th>
+								<th class="table-warning text-center">&nbsp; &nbsp;Alerta&nbsp; &nbsp;</th>
+								<th class="table-light text-center">&nbsp; &nbsp;Do dia&nbsp; &nbsp;</th>
+								<th class="table-success text-center">No prazo</th>													
+							</tr>
+						</thead>
+					</table>
+
+					<table class="table table-hover table-sm table-light">				
+						<thead class="thead-dark">
+							<tr>					
+								<th  class="text-center">LOJA</th>
+								<th  class="text-center">CRP</th>
+								<th  class="text-center">MINUTA</th>
+								<th  class="text-center">TIPO</th>
+								<th  class="text-center">ZONA</th>
+								<th  class="text-center">DATA PREVISAO</th>
+								<th  class="text-center">RECOLHIMENTO</th>
+								<th  class="text-center">AÇÃO</th>														
+							</tr>
+						</thead>
+						<tbody>  
+							{% for crp in crps %}
+							{% if crp.dataPrevisaoLimite < data_atual %} 	          
+							<tr class="table-danger">												                   
+								<td class="text-center">{{ crp.loja }}</td>
+								<td class="text-center">{{ crp.numCrp }}</td>
+								<td class="text-center">{{ crp.numMinuta }}</td>
+								{% if crp.tipo == "E" %}
+								<td><a class="badge badge-pill badge-danger text-center">{{ crp.tipo }}</a></td>
+								{% elif crp.tipo == "T"%}
+								<td><a class="badge badge-pill badge-warning text-center">{{ crp.tipo }}</a></td>
+								{% elif crp.tipo == "R"%}
+								<td><a class="badge badge-pill badge-success text-center">{{ crp.tipo }}</a></td>
+								{% endif %}
+								<td class="text-center">{{ crp.zona }}</td>
+								<td class="text-center">{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
+								{% if crp.recolhimento == "1" %}
+								<td class="text-center">SIM</td>
+								{% else %}
+								<td class="text-center">NÃO</td>
+								{% endif %}	
+								<td class="text-center"><a href="#" class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Alterar status"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a></td>				
+
+							</tr>
+
+							{% elif crp.dataPrevisaoLimite == data_atual %} 	          
+							<tr class="table-light">												                   
+								<td class="text-center">{{ crp.loja }}</td>
+								<td class="text-center">{{ crp.numCrp }}</td>
+								<td class="text-center">{{ crp.numMinuta }}</td>
+								{% if crp.tipo == "E" %}
+								<td><a class="badge badge-pill badge-danger text-center">{{ crp.tipo }}</a></td>
+								{% elif crp.tipo == "T"%}
+								<td><a class="badge badge-pill badge-warning text-center">{{ crp.tipo }}</a></td>
+								{% elif crp.tipo == "R"%}
+								<td><a class="badge badge-pill badge-success text-center">{{ crp.tipo }}</a></td>
+								{% endif %}
+								<td class="text-center">{{ crp.zona }}</td>
+								<td class="text-center">{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
+								{% if crp.recolhimento == "1" %}
+								<td class="text-center">SIM</td>
+								{% else %}
+								<td class="text-center">NÃO</td>
+								{% endif %}						
+								<td class="text-center"><a href="#" class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Alterar status"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a></td>
+							</tr>
+							{% elif crp.dataPrevisaoLimite <= data_alerta and crp.dataPrevisaoLimite > data_atual%} 	          
+							<tr class="table-warning">												                   
+								<td class="text-center">{{ crp.loja }}</td>
+								<td class="text-center">{{ crp.numCrp }}</td>
+								<td class="text-center">{{ crp.numMinuta }}</td>
+								{% if crp.tipo == "E" %}
+								<td><a class="badge badge-pill badge-danger text-center">{{ crp.tipo }}</a></td>
+								{% elif crp.tipo == "T"%}
+								<td><a class="badge badge-pill badge-warning text-center">{{ crp.tipo }}</a></td>
+								{% elif crp.tipo == "R"%}
+								<td><a class="badge badge-pill badge-success text-center">{{ crp.tipo }}</a></td>
+								{% endif %}
+								<td class="text-center">{{ crp.zona }}</td>
+								<td class="text-center">{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
+								{% if crp.recolhimento == "1" %}
+								<td class="text-center">SIM</td>
+								{% else %}
+								<td class="text-center">NÃO</td>
+								{% endif %}						
+								<td class="text-center"><a href="#" class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Alterar status"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a></td>
+							</tr>
+							{% elif crp.dataPrevisaoLimite > data_atual %}
+							<tr class="table-success">	
+								<td class="text-center">{{ crp.loja }}</td>
+								<td class="text-center">{{ crp.numCrp }}</td>
+								<td class="text-center">{{ crp.numMinuta }}</td>
+								{% if crp.tipo == "E" %}
+								<td><a class="badge badge-pill badge-danger text-center">{{ crp.tipo }}</a></td>
+								{% elif crp.tipo == "T"%}
+								<td><a class="badge badge-pill badge-warning text-center">{{ crp.tipo }}</a></td>
+								{% elif crp.tipo == "R"%}
+								<td><a class="badge badge-pill badge-success text-center">{{ crp.tipo }}</a></td>
+								{% endif %}
+								<td class="text-center">{{ crp.zona }}</td>
+								<td class="text-center">{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
+								{% if crp.recolhimento == "1" %}
+								<td class="text-center">SIM</td>
+								{% else %}
+								<td class="text-center">NÃO</td>
+								{% endif %}					
+								<td class="text-center"><a href="#" class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Alterar status"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a></td>
+							</tr>
+							{% endif%}
+
+						</tbody>{% endfor %}
+					</table>
 
 
 
-		</div>	
+				</div>	
+			</div>
+		</div>
+
 	</div>
-</div>
 
 
 
 
-
-
-{% endblock %}
+	{% endblock %}

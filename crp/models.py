@@ -56,6 +56,8 @@ class Crp(models.Model):
     updated_at = models.DateTimeField('Atualizado em',auto_now = True)
     zona = models.CharField('Zona:', choices=ZONAS,max_length = 8, blank=False)
     dataPrevisaoLimite = models.DateField('Data limite para resolução:', blank = False)
+    #dataChegadaPeca = models.DateField('Data de chegada da peça:', blank = False)
+    #dataConclusao = models.DateField('Data de conclusão da montagem:', blank = False)
     recolhimento = models.CharField('Recolher peça:', choices=RECOLHER_PECA,max_length = 1, blank=False)
     recolhida = models.CharField('Peça recolhida:', choices=RECOLHER_PECA,max_length = 1, blank=True)
     status = models.CharField('Status de montagem:', choices=STATUS,max_length = 9,blank=True,default='PENDENTE')

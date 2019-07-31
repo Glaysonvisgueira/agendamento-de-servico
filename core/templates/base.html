@@ -17,10 +17,6 @@
   background-size:100%;
 }
 
-.dropdown:hover>.dropdown-menu{
-  display:block;
-}
-
 </style>
 
 <head>
@@ -55,8 +51,9 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'cadastrar_crp' %}">Cadastrar CRP</a>
-          <a class="dropdown-item" href="{% url 'relatorio_de_crps_pendentes' %}">Relatório de CRP's pendentes de conclusão</a>
-          <a class="dropdown-item" href="{% url 'relatorio_de_crps_pendentes' %}">Relatório de CRP's</a>          
+          <a class="dropdown-item" href="{% url 'relatorio_de_crps_pendentes' %}">CRP's pendentes</a>
+          <a class="dropdown-item" href="#">CRP's pendentes de recolhimento</a> 
+          <a class="dropdown-item" href="#">Relatório geral de CRP's</a>          
         </div>
       </li>
        <li class="nav-item dropdown">
@@ -67,6 +64,9 @@
           <a class="dropdown-item" href="{% url 'agendar' %}">Cadastrar agendamento</a>
           <a class="dropdown-item" href="{% url 'listarAgendamentos' %}">Relatório de agendamentos</a>          
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/Glaysonvisgueira/agendamento-de-servico"  data-toggle="tooltip" data-placement="bottom" title="Link do repositório do projeto no Github">Código fonte</a>
       </li>
 
       <li class="nav-item">

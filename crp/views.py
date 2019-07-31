@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from datetime import date
+from datetime import date, timedelta
 
 
 from crp.models import Crp
@@ -28,11 +28,13 @@ def cadastrar_crp(request):
     return render(request, template_name, context)
 
 def relatorio_de_crps_pendentes(request):    
-    crps = Crp.objects.all().exclude(status='REALIZADO').exclude(status='CANCELADO')  
+    crps = Crp.objects.all().exclude(status='REALIZADO').exclude(status='CANCELADO').order_by('dataPrevisaoLimite')  
     data_atual = date.today()
+    data_alerta = data_atual + timedelta(days=3)
     template_name = 'relatorio-de-crps.html'         
     context = {
         'crps': crps,
-        'data_atual':data_atual,
+        'data_atual': data_atual,
+        'data_alerta': data_alerta,
     }    
     return render(request, template_name, context)
