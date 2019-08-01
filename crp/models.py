@@ -24,10 +24,20 @@ ZONAS = (
         ('R.TIMON', 'R.TIMON'),
     )
 
-STATUS = (
+'''STATUS = (
         ('REALIZADO', 'REALIZADO'),
         ('PENDENTE', 'PENDENTE'),
         ('CANCELADO', 'CANCELADO'),        
+    )'''
+
+
+STATUS = (       
+        ('CANCELADO', 'CANCELADO'),   
+        ('PENDENTE', 'PENDENTE'),       
+        ('SEPARACAO', 'SEPARAÇÃO'),
+        ('ATENDIDA', 'ATENDIDA'),
+        ('EXPEDICAO', 'EXPEDIÇÃO'),
+        ('REALIZADO', 'REALIZADO'),     
     )
 
 LOJAS = (
@@ -47,7 +57,7 @@ LOJAS = (
     )
 
 class Crp(models.Model):
-    slug = models.SlugField('Loja + Minuta:')
+    slug = models.SlugField('Campo SLUG:',blank = True)
     loja = models.CharField('Loja:', choices=LOJAS,max_length = 3, blank=False)
     numMinuta = models.CharField('Minuta:', max_length = 7, blank=False)
     numCrp = models.CharField('CRP:', max_length = 5, blank=False)
@@ -56,11 +66,13 @@ class Crp(models.Model):
     updated_at = models.DateTimeField('Atualizado em',auto_now = True)
     zona = models.CharField('Zona:', choices=ZONAS,max_length = 8, blank=False)
     dataPrevisaoLimite = models.DateField('Data limite para resolução:', blank = False)
-    #dataChegadaPeca = models.DateField('Data de chegada da peça:', blank = False)
-    #dataConclusao = models.DateField('Data de conclusão da montagem:', blank = False)
+    dataEnvioSetorCrp = models.DateField('Data de envio para setor de CRP:', auto_now_add = True)
+    dataEnvioSetorEntrega = models.DateField('Data de envio para setor de entrega:', blank = True,null=True) 
+    dataChegadaPeca = models.DateField('Data de chegada da peça:', blank = True, null=True)    
+    dataConclusao = models.DateField('Data de conclusão da montagem da CRP:', blank = True,null=True)
     recolhimento = models.CharField('Recolher peça:', choices=RECOLHER_PECA,max_length = 1, blank=False)
     recolhida = models.CharField('Peça recolhida:', choices=RECOLHER_PECA,max_length = 1, blank=True)
-    status = models.CharField('Status de montagem:', choices=STATUS,max_length = 9,blank=True,default='PENDENTE')
+    status = models.CharField('Status dO atendimento da CRP:', choices=STATUS,max_length = 9,blank=True,default='PENDENTE')    
 
     def __str__(self):
         return self.loja 

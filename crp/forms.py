@@ -32,8 +32,12 @@ ZONAS = (
 
 STATUS = (
 		('----','----'),
-        ('REALIZADO', 'REALIZADO'),
-        ('CANCELADO', 'CANCELADO'),        
+        ('CANCELADO', 'CANCELADO'),   
+        ('PENDENTE', 'PENDENTE'),       
+        ('SEPARACAO', 'SEPARAÇÃO'),
+        ('ATENDIDA', 'ATENDIDA'),
+        ('EXPEDICAO', 'EXPEDIÇÃO'),
+        ('REALIZADO', 'REALIZADO'),     
     )
 
 LOJAS = (
@@ -61,7 +65,7 @@ class CrpForm(forms.ModelForm):
     zona = forms.CharField(widget=forms.Select(choices=ZONAS,attrs={'class':'form-control form-control-sm'}))
     dataPrevisaoLimite = forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'dd/mm/aaaa','class':'form-control form-control-sm'}))
     recolhimento = forms.CharField(widget=forms.Select(choices=RECOLHER_PECA,attrs={'class':'form-control form-control-sm'}))
-    
+   
 
     class Meta:
 	    model = Crp
