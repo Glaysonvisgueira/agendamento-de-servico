@@ -2,7 +2,6 @@ from bootstrap_datepicker_plus import DatePickerInput, TimePickerInput, DateTime
 from django import forms
 from crp.models import Crp
 
-
 TIPO_CRP = (
 		('----','----'),
         ('T', 'Estético'),
@@ -70,3 +69,39 @@ class CrpForm(forms.ModelForm):
     class Meta:
 	    model = Crp
 	    fields = ['loja','numMinuta','numCrp','tipo','zona','dataPrevisaoLimite','recolhimento']
+
+
+class DataChegadaPecaForm(forms.ModelForm):
+    dataChegadaPeca =forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'dd/mm/aaaa','class':'form-control form-control-sm'}))
+
+    class Meta:
+        model = Crp
+        fields = ['dataChegadaPeca']
+
+class DataEnvioSetorEntregaForm(forms.ModelForm):
+    dataEnvioSetorEntrega =forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'dd/mm/aaaa','class':'form-control form-control-sm'}))
+
+    class Meta:
+        model = Crp
+        fields = ['dataEnvioSetorEntrega']
+
+class DataConclusaoForm(forms.ModelForm):
+    dataConclusao =forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'dd/mm/aaaa','class':'form-control form-control-sm'}))
+
+    class Meta:
+        model = Crp
+        fields = ['dataConclusao']
+
+class CrpRecolhidaForm(forms.ModelForm):
+    recolhida = forms.CharField(widget=forms.Select(choices=RECOLHER_PECA,attrs={'class':'form-control form-control-sm'}))
+
+    class Meta:
+        model = Crp
+        fields = ['recolhida']
+
+class StatusForm(forms.ModelForm):
+    status = forms.CharField(widget=forms.Select(choices=STATUS,attrs={'class':'form-control form-control-sm'}))
+
+    class Meta:
+        model = Crp
+        fields = ['status']

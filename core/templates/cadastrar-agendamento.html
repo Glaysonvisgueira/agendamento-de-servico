@@ -88,4 +88,55 @@
 </div>
 </div>
 
+
+
+
+<div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Título do modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div class="container">
+	<div class="row">
+
+		<div class="col-4 mx-auto">
+			<div class="alert alert-warning" role="alert">
+				Após a edição clique em <strong>salvar alterações.</strong>
+			</div>	
+			<form method="POST">
+				{% csrf_token %}
+				<label class="font-weight-bold mt-2">Loja</label>
+				<div>{{form.loja}}</div>
+				<label class="font-weight-bold mt-2">Minuta</label>
+				<div>{{form.numMinuta}}</div>
+				<label class="font-weight-bold mt-2">Cliente</label>
+				<div>{{form.cliente}}</div>
+				<label class="font-weight-bold mt-2">Zona</label>
+				<div>{{form.zona}}</div>
+				<label class="font-weight-bold mt-2">Data de agendamento</label>
+				<div>{{form.dataAgendamento}}</div>
+				<label class="font-weight-bold mt-2">Turno de agendamento</label>
+				<div>{{form.turnoAgendamento}}</div>
+				<label class="font-weight-bold mt-2">Status do atendimento</label>
+				<div>{{form1.status}}</div>
+				<button type="submit" class="mt-3 btn btn-warning btn-block"><strong>Salvar alterações&nbsp;<img src="/static/feather/save.svg" alt="save" class="icone"></strong></button>
+			</form>
+		</div>
+	</div>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary">Salvar mudanças</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 {% endblock %}

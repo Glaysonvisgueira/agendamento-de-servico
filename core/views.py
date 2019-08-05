@@ -89,7 +89,7 @@ def editarAgendamento(request, pk):
 
 def PostList(request):    
     contact_list = Minuta.objects.all()
-    paginator = Paginator(contact_list, ITENS_POR_PAGINA) # Show 25 contacts per page
+    paginator = Paginator(contact_list, 5) # Show 25 contacts per page
     page = request.GET.get('page')
     contacts = paginator.get_page(page)
     form = DataAuxForm()
