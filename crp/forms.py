@@ -30,12 +30,7 @@ ZONAS = (
     )
 
 STATUS = (
-		('----','----'),
-        ('CANCELADO', 'CANCELADO'),   
-        ('PENDENTE', 'PENDENTE'),       
-        ('SEPARACAO', 'SEPARAÇÃO'),
-        ('ATENDIDA', 'ATENDIDA'),
-        ('EXPEDICAO', 'EXPEDIÇÃO'),
+		        
         ('REALIZADO', 'REALIZADO'),     
     )
 
@@ -85,8 +80,17 @@ class DataEnvioSetorEntregaForm(forms.ModelForm):
         model = Crp
         fields = ['dataEnvioSetorEntrega']
 
+class DataRecebimentoSetorEntregaForm(forms.ModelForm):
+    dataRecebimentoCrpEntrega =forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'dd/mm/aaaa','class':'form-control form-control-sm'}))
+
+    class Meta:
+        model = Crp
+        fields = ['dataRecebimentoCrpEntrega']
+
+
 class DataConclusaoForm(forms.ModelForm):
     dataConclusao =forms.DateField(widget=DatePickerInput(options={"locale":"pt-br"},format='%d/%m/%Y',attrs={'placeholder':'dd/mm/aaaa','class':'form-control form-control-sm'}))
+    
 
     class Meta:
         model = Crp
@@ -100,7 +104,7 @@ class CrpRecolhidaForm(forms.ModelForm):
         fields = ['recolhida']
 
 class StatusForm(forms.ModelForm):
-    status = forms.CharField(widget=forms.Select(choices=STATUS,attrs={'class':'form-control form-control-sm'}))
+    status = forms.CharField(widget=forms.Select(choices=STATUS,attrs={'class':'form-control form-control-sm'}),initial='REALIZADO')
 
     class Meta:
         model = Crp

@@ -69,6 +69,7 @@ class Crp(models.Model):
     dataPrevisaoLimite = models.DateField('Data limite para resolução:', blank = False)
     dataEnvioSetorCrp = models.DateField('Data de envio para setor de CRP:', auto_now_add = True)
     dataEnvioSetorEntrega = models.DateField('Data de envio para setor de entrega:', blank = True, null=True) 
+    dataRecebimentoCrpEntrega = models.DateField('Data de recebimento da CRP do setor de entrega:', blank = True, null=True)
     dataChegadaPeca = models.DateField('Data de chegada da peça:', blank = True, null=True)    
     dataConclusao = models.DateField('Data de conclusão da montagem da CRP:', blank = True,null=True)
     recolhimento = models.CharField('Recolher peça:', choices=RECOLHER_PECA,max_length = 1, blank=False)

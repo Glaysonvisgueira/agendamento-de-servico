@@ -7,7 +7,7 @@ from bootstrap_modal_forms.generic import BSModalCreateView
 
 
 from crp.models import Crp
-from crp.forms import CrpForm, DataChegadaPecaForm, DataEnvioSetorEntregaForm
+from crp.forms import CrpForm, DataChegadaPecaForm, DataEnvioSetorEntregaForm, DataConclusaoForm, DataRecebimentoSetorEntregaForm, StatusForm
 
 
 def is_valid_queryparam(param, param2):
@@ -54,7 +54,7 @@ def editar_chegada_peca(request, pk):
 
     return render(request, 'editar-chegada-peca.html', {'form': form})
 
-#Form para cadastrar a data de envio da crp para o setor de entrega
+#Form para cadastrar a data de envio da CRP para o setor de entrega
 def envio_setor_entrega(request, pk):
     crp = get_object_or_404(Crp, pk=pk)
     if request.method == "POST":
@@ -67,3 +67,40 @@ def envio_setor_entrega(request, pk):
         form = DataEnvioSetorEntregaForm(instance=crp)
 
     return render(request, 'data-envio-setor-entrega.html', {'form': form})
+
+
+#Form para cadastrar a data de recebimento da CRP do setor de entrega
+def data_recebimento_entrega(request, pk):
+    crp = get_object_or_404(Crp, pk=pk)
+    if request.method == "POST":
+        form = DataRecebimentoSetorEntregaForm(request.POST, instance=crp)        
+        if form.is_valid():
+            crp = form.save(commit=False)            
+            crp.save()
+            return redirect('http://localhost:8000/crp/relatorio-de-crps-pendentes/', pk=crp.pk)
+    else:
+        form = DataRecebimentoSetorEntregaForm(instance=crp)
+
+    return render(request, 'data-recebimento-crp-entrega.html', {'form': form})
+
+
+#Form para cadastrar a data de conclusão da CRP
+def data_conclusao_crp(request, pk):
+    crp = get_object_or_404(Crp, pk=pk)
+    if request.method == "POST":
+        form = DataConclusaoForm(request.POST, instance=crp)
+        form1 = StatusForm(request.POST, instance=crp)        
+        if form.is_valid():
+            crp = form.save(commit=False)           
+            crp.save()
+            crp = form1.save(commit=False)           
+            crp.save()
+            
+            return redirect('http://localhost:8000/crp/relatorio-de-crps-pendentes/', pk=crp.pk)
+    else:
+        form = DataConclusaoForm(instance=crp)
+        form1 = StatusForm(instance=crp)
+
+
+    return render(request, 'data-conclusao-crp.html', {'form': form,'form1':form1})
+

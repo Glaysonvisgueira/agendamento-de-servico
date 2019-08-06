@@ -22,9 +22,9 @@
 			<div class="card col-12 mt-2 border border-dark ">
 				<a class="card-header mx-auto"><strong>Prazos de atendimento</strong></a>
 				<p class="text-center">
-					<a class="badge badge-pill badge-danger mt-2">E</a> - Estrutural: 03 dias úteis<br> 
+					<a class="badge badge-pill badge-danger text-light mt-2">E</a> - Estrutural: 03 dias úteis<br> 
 					<a class="badge badge-pill badge-warning">T</a> - Estético &nbsp;&nbsp;: 05 dias úteis<br>
-					<a class="badge badge-pill badge-success">R</a> - Revisão &nbsp;&nbsp;: 30 dias úteis</p>
+					<a class="badge badge-pill badge-success text-light">R</a> - Revisão &nbsp;&nbsp;: 30 dias úteis</p>
 					<a class="card-header mx-auto"><strong>Esquema de identificação visual</strong></a>
 					<table class="table table-sm table-light mt-4">				
 						<thead>
@@ -52,6 +52,7 @@
 							<th  class="text-center">DT ABERT. CRP</th>
 							<th  class="text-center">DT RECEBIMENTO</th>
 							<th  class="text-center">DT REPASSE ENTREGA</th>
+							<th  class="text-center">DT DEVOL. CRP</th>
 							<th  class="text-center">RECOLHIMENTO</th>
 							<th  class="text-center">AÇÃO</th>														
 						</tr>
@@ -64,38 +65,53 @@
 							<td class="text-center">{{ crp.numCrp }}</td>
 							<td class="text-center">{{ crp.numMinuta }}</td>
 							{% if crp.tipo == "E" %}
-							<td class="text-center"><a class="badge badge-pill badge-danger">{{ crp.tipo }}</a></td>
+							<td class="text-center"><a class="badge badge-pill badge-danger text-light">{{ crp.tipo }}</a></td>
 							{% elif crp.tipo == "T"%}
-							<td class="text-center"><a class="badge badge-pill badge-warning">{{ crp.tipo }}</a></td>
+							<td class="text-center"><a class="badge badge-pill badge-warning text-dark">{{ crp.tipo }}</a></td>
 							{% elif crp.tipo == "R"%}
-							<td class="text-center"><a class="badge badge-pill badge-success">{{ crp.tipo }}</a></td>
+							<td class="text-center"><a class="badge badge-pill badge-success text-light">{{ crp.tipo }}</a></td>
 							{% endif %}
 							<td class="text-center">{{ crp.zona }}</td>
 							<td class="text-center">{{ crp.dataPrevisaoLimite|date:"d/m/Y" }}</td>
 							<td class="text-center">{{ crp.dataEnvioSetorCrp|date:"d/m/Y" }}</td>
 							<td class="text-center">{{ crp.dataChegadaPeca|date:"d/m/Y" }}</td>
 							<td class="text-center">{{ crp.dataEnvioSetorEntrega|date:"d/m/Y" }}</td>
+							<td class="text-center">{{ crp.dataRecebimentoCrpEntrega|date:"d/m/Y" }}</td>
 							{% if crp.recolhimento == "1" %}
-							<td class="text-center text-danger font-weight-bold">SIM</td>
+							<td class="text-center text-light font-weight-bold"><a class="badge badge-danger">SIM</a></td>
 							{% else %}
-							<td class="text-center text-success font-weight-bold">NÃO</td>
+							<td class="text-center text-light font-weight-bold"><a class="badge badge-success">NÃO</a></td>
 							{% endif %}
 
 							{% if crp.dataChegadaPeca == null %}	
 							<td class="text-center">
-								<a href="{% url 'editar_chegada_peca' pk=crp.pk %}" class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Confirmar recebimento"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>
-								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após a chegada da peça"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>									
+								<a href="{% url 'editar_chegada_peca' pk=crp.pk %}" class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Confirmar recebimento"><img src="/static/feather/x-circle.svg" alt="check-circle" class="icone"></a>
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após a chegada da peça"><img src="/static/feather/x-circle.svg" alt="check-circle" class="icone"></a>
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o devolvimento da CRP pelo setor de entregas"><img src="/static/feather/x-circle.svg" alt="check-circle" class="icone"></a>
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o montagem da peça"><img src="/static/feather/x-circle.svg" alt="check-circle" class="icone"></a>									
 							</td>
 							{% elif crp.dataChegadaPeca != null and crp.dataEnvioSetorEntrega == null%}
 							<td class="text-center">
 								<a  class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Peça já recebida"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone" data-toggle="modal" data-target="#ModalLongoExemplo"></a>
-								<a href="{% url 'envio_setor_entrega' pk=crp.pk %}" class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Confirmar envio setor de entregas"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>									
+								<a href="{% url 'envio_setor_entrega' pk=crp.pk %}" class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Confirmar envio setor de entregas"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o devolvimento da CRP pelo setor de entregas"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o montagem da peça"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>										
 							</td>
+							{% elif crp.dataEnvioSetorEntrega != null and crp.dataChegadaPeca != null and crp.dataRecebimentoCrpEntrega != null %}
+							<td class="text-center">
+								<a  class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Peça já recebida"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone" data-toggle="modal" data-target="#ModalLongoExemplo"></a>
+								<a  class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Confirmar envio setor de entregas"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>
+								<a  class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Disponível após o devolvimento da CRP pelo setor de entregas"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>
+								<a href="{% url 'data_conclusao_crp' pk=crp.pk %}" class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o montagem da peça"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>	
+							</td>		
 							{% elif crp.dataEnvioSetorEntrega != null and crp.dataChegadaPeca != null %}
 							<td class="text-center">
 								<a  class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Peça já recebida"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone" data-toggle="modal" data-target="#ModalLongoExemplo"></a>
 								<a  class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Confirmar envio setor de entregas"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>
-							</td>						
+								<a href="{% url 'data_recebimento_entrega' pk=crp.pk %}" class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o devolvimento da CRP pelo setor de entregas"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o montagem da peça"><img src="/static/feather/check-circle.svg" alt="check-circle" class="icone"></a>	
+							</td>
+												
 
 							{% endif%}										
 
