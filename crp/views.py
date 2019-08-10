@@ -3,14 +3,13 @@ from django.http import HttpResponse
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import date, timedelta
-from bootstrap_modal_forms.generic import BSModalCreateView
 
 
 from crp.models import Crp
 from crp.forms import CrpForm, DataChegadaPecaForm, DataEnvioSetorEntregaForm, DataConclusaoForm, DataRecebimentoSetorEntregaForm, StatusForm
 
 
-def is_valid_queryparam(param, param2):
+def is_valid_queryparam(param):
     return param != '' and param is not None 
 
 def cadastrar_crp(request):
@@ -27,15 +26,17 @@ def cadastrar_crp(request):
     return render(request, template_name, context)
 
 def relatorio_de_crps_pendentes(request):    
-    crps = Crp.objects.all().exclude(status='REALIZADO').exclude(status='CANCELADO').order_by('dataPrevisaoLimite')  
+    crps = Crp.objects.all().exclude(status='REALIZADO').exclude(status='CANCELADO').order_by('dataPrevisaoLimite')    
     data_atual = date.today()
     data_alerta = data_atual + timedelta(days=3)
-    template_name = 'relatorio-de-crps.html'    
+    template_name = 'relatorio-de-crps.html' 
+    tipo_crp = request.GET.get('tipo_crp')  
+    if is_valid_queryparam(tipo_crp):
+        crps = crps.filter(tipo=tipo_crp)
     context = {
         'crps': crps,
         'data_atual': data_atual,
-        'data_alerta': data_alerta,
-        
+        'data_alerta': data_alerta,  
     }
 
     return render(request, template_name, context)

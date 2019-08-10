@@ -12,35 +12,45 @@
 </script>
 
 <div class="container-fluid">
-	<div class="card col-10 mx-auto border border-dark">	
+	<div class="card col-12 mx-auto">	
 
 		<div class="card-body col-12 mx-auto">
 		<!--<span class="badge badge-warning">Data atual: {{data_atual|date:"d/m/Y"}}</span>
 			<span class="badge badge-warning">Data atual: {{data_alerta|date:"d/m/Y"}}</span>-->
 			<h3 class="card-header text-center">Relatório de CRP's pendentes</h3>
-			
-			<div class="card col-12 mt-2 border border-dark ">
-				<a class="card-header mx-auto"><strong>Prazos de atendimento</strong></a>
+			<div class="row">
+			<div class="card col-2 mt-2 alert-dark">
+				
 				<p class="text-center">
-					<a class="badge badge-pill badge-danger text-light mt-2">E</a> - Estrutural: 03 dias úteis<br> 
-					<a class="badge badge-pill badge-warning">T</a> - Estético &nbsp;&nbsp;: 05 dias úteis<br>
-					<a class="badge badge-pill badge-success text-light">R</a> - Revisão &nbsp;&nbsp;: 30 dias úteis</p>
-					<a class="card-header mx-auto"><strong>Esquema de identificação visual</strong></a>
-					<table class="table table-sm table-light mt-4">				
-						<thead>
-							<tr>					
-								<th class="table-danger text-center">&nbsp; &nbsp;Atraso&nbsp; &nbsp;</th>
-								<th class="table-warning text-center">&nbsp; &nbsp;Alerta&nbsp; &nbsp;</th>
-								<th class="table-light text-center">&nbsp; &nbsp;Do dia&nbsp; &nbsp;</th>
-								<th class="table-success text-center">No prazo</th>													
-							</tr>
-						</thead>
-					</table>
-				</div>			
-
-
-
-				<table class="table table-hover table-sm table-light mt-3">				
+					<a class="badge badge-pill badge-danger text-light mt-3">E</a><strong> - Estrutural: </strong>03 dias úteis<br> 
+					<a class="badge badge-pill badge-warning">T</a><strong> - Estético&nbsp;&nbsp;:</strong> 05 dias úteis<br>
+					<a class="badge badge-pill badge-success text-light">R</a><strong> - Revisão&nbsp;&nbsp;:</strong> 30 dias úteis</p>					
+				</div>
+				<div class="col-1 mt-3">
+					
+					<form>
+					<select class="selectpicker" multiple data-max-options="2" data-style="btn-dark" name="tipo_crp">
+						<option selected>Nada selecionado</option>	
+						<option data-subtext="Estético"><strong>T</strong></option>
+						<option data-subtext="Estrutural" >E</option>
+						<option data-subtext="Revisão" >R</option>
+					  </select>
+					  <button type="submit" class="btn btn-warning btn-block mt-2"><strong>Filtrar</strong>&nbsp;<img src="/static/feather/filter.svg" alt="filter" class="icone"></button>
+					</form>
+					
+			</div>
+				<table class="table table-sm table-light mt-4">				
+					<thead>
+						<tr>					
+							<th class="table-danger text-center">&nbsp; &nbsp;Atraso&nbsp; &nbsp;</th>
+							<th class="table-warning text-center">&nbsp; &nbsp;Alerta&nbsp; &nbsp;</th>
+							<th class="table-light text-center">&nbsp; &nbsp;Do dia&nbsp; &nbsp;</th>
+							<th class="table-success text-center">No prazo</th>													
+						</tr>
+					</thead>
+				</table>
+				<div class="table-responsive">
+				<table class="table table-hover table-sm table-light table-bordered mt-3 ">				
 					<thead class="thead-dark">
 						<tr>					
 							<th  class="text-center">LOJA</th>
@@ -86,9 +96,9 @@
 							{% if crp.dataChegadaPeca == null %}	
 							<td class="text-center">
 								<a href="{% url 'editar_chegada_peca' pk=crp.pk %}" class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Confirmar recebimento"><img src="/static/feather/x-circle.svg" alt="check-circle" class="icone"></a>
-								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após a chegada da peça"><img src="/static/feather/x-circle.svg" alt="check-circle" class="icone"></a>
-								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o devolvimento da CRP pelo setor de entregas"><img src="/static/feather/x-circle.svg" alt="check-circle" class="icone"></a>
-								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o montagem da peça"><img src="/static/feather/x-circle.svg" alt="check-circle" class="icone"></a>									
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após a chegada da peça"><img src="/static/feather/circle.svg" alt="check-circle" class="icone"></a>
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o devolvimento da CRP pelo setor de entregas"><img src="/static/feather/circle.svg" alt="check-circle" class="icone"></a>
+								<a class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Disponível após o montagem da peça"><img src="/static/feather/circle.svg" alt="check-circle" class="icone"></a>									
 							</td>
 							{% elif crp.dataChegadaPeca != null and crp.dataEnvioSetorEntrega == null%}
 							<td class="text-center">
@@ -184,7 +194,7 @@
 
 					</tbody>{% endfor %}
 				</table>
-
+			</div>
 
 
 			</div>	
